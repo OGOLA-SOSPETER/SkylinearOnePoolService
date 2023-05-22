@@ -7,4 +7,8 @@ sealed class Screen(val route: String){
     object Settings:Screen(route = "settings")
     object Registration:Screen(route = "register")
     object SignUp:Screen(route = "signup")
+    object About:Screen(route = "about_dev")
+    object Reset:Screen(route = "reset_pass")
+
+
 }

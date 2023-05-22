@@ -39,4 +39,16 @@
     <string name="enter_id_to_search">Enter ID to search.</string>
     <string name="search_here">Search here.</string>
     <string name="search_icon">search icon</string>
+    <string name="registration">Registration</string>
+    <string name="back_to_home">back to home</string>
+    <string name="required_error">Required</string>
+    <string name="developer_image">Developer\'s image</string>
+    <string name="developer_contact_info">Developer\'s Contact Information:</string>
+    <string name="email_link">Email link.</string>
+    <string name="my_email">My Email</string>
+    <string name="facebook">Facebook</string>
+    <string name="facebook_link">Get Us on FaceBook</string>
+    <string name="follow_us_on_instagram">Follow us on Instagram</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="whatsapp_connect">Let\'s Chat on WhatsApp</string>
 </resources>

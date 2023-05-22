@@ -33,6 +33,7 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -52,6 +53,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.Red
@@ -67,6 +69,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import seniordeveloper.peter.skylinearonepoolservice.R
 import seniordeveloper.peter.skylinearonepoolservice.models.Screen
 import seniordeveloper.peter.skylinearonepoolservice.data_Sets.DataList
@@ -133,21 +136,23 @@ fun AppDashboard(navController:NavHostController) {
 
                     },
 
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(LightGray)
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(Gray),
+
                 )
             },
             bottomBar = {
                 BottomAppBar(
                     modifier = Modifier.height(60.dp),
-                    containerColor = LightGray, contentColor = White,
+                    containerColor = Gray, contentColor = White,
                     tonalElevation = 3.dp
                 ) {
+
                     Box {
                         Column {
                             IconButton(onClick = { navController.navigate(Screen.Profile.route) }) {
                                 Icon(Icons.Filled.Person, contentDescription = null)
                             }
-                            Text(text = "People",modifier = Modifier.padding(top = 1.dp))
+                            Text(text = "People",modifier = Modifier.padding(top = 0.dp))
                         }
                     }
                     Spacer(modifier = Modifier.width(90.dp))
@@ -156,7 +161,7 @@ fun AppDashboard(navController:NavHostController) {
                             IconButton(onClick = {navController.navigate("loginPage")}) {
                                 Icon(Icons.Filled.Home, contentDescription = null)
                             }
-                            Text(text = "Home",modifier = Modifier.padding(top = 1.dp))
+                            Text(text = "Home",modifier = Modifier.padding(top = 0.dp))
                         }
                     }
 
@@ -164,11 +169,11 @@ fun AppDashboard(navController:NavHostController) {
                     Box{
                         Column {
                             IconButton(onClick = { /*TODO*/ }) {
-                                BadgedBox(badge = { Text(text = "$num", color = Red)}) {
+                                BadgedBox(badge = { Text(text = "$num", color = White)}) {
                                     Icon(Icons.Filled.AccountBox,contentDescription = null)
                                 }
                             }
-                            Text(text = "Accounts",modifier = Modifier.padding(top = 1.dp))
+                            Text(text = "Accounts",modifier = Modifier.padding(top = 0.dp))
                         }
                     }
 
@@ -200,6 +205,7 @@ fun PreviewDashboard(){
 private  fun Main(navController: NavHostController){
     var txt by remember{mutableStateOf("")}
     val context = LocalContext.current
+    var showPro by remember { mutableStateOf(false) }
 
     Column(verticalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.padding(top = 80.dp, start =  7.dp, end = 10.dp)) {
 
@@ -226,51 +232,38 @@ private  fun Main(navController: NavHostController){
                     contentDescription = stringResource(R.string.search_icon),
                     tint = Color.Blue,
                     modifier = Modifier.size(28.dp)
-                )
+                    )
+
             }
             }
         )
         Spacer(modifier = Modifier.height(20.dp))
-//        Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
-//            ElevatedCard(onClick = { /*TODO*/ }, modifier = Modifier
-//                .width(170.dp)
-//                .height(170.dp)
-//                .align(CenterVertically),
-//                colors = CardDefaults.cardColors(LightGray, White, Gray,Red)
-//            ) {
-//                Column(verticalArrangement = Arrangement.Center) {
-//                    Text(text = "Welcome", textAlign = TextAlign.Center, fontSize = 15.sp)
-//                }
-//            }
-//            ElevatedCard(onClick = { /*TODO*/ }, modifier = Modifier
-//                .width(170.dp)
-//                .height(170.dp)
-//                .align(CenterVertically),
-//                colors = CardDefaults.cardColors(LightGray, White, Gray,Red)
 //
-//                ) {
-//                Column(verticalArrangement = Arrangement.Center){
-//                    Text(text = "Karibu", textAlign = TextAlign.Center, fontSize = 15.sp)
-//                }
-//            }
-//
-//        }
-        LazyVerticalGrid(columns = GridCells.Fixed(2), content = {
+        LazyVerticalGrid(columns = GridCells.Fixed(1), content = {
             val dataList = DataList()
             val strings = dataList.mutableStringList
             items(strings.size){item ->
-                ElevatedCard(onClick = { /*TODO*/ }, modifier = Modifier
+                ElevatedCard(onClick = {
+                                       showPro = !showPro
+                }, modifier = Modifier
                     .width(170.dp)
                     .height(170.dp),
                     colors = CardDefaults.cardColors(LightGray, White, Gray,Red)
 
                 ) {
                     Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally){
-                        Text(text = "\n\n\n\n\t\t\t\t\t $item ${strings[item]}", textAlign = TextAlign.Center, fontSize = 15.sp)
+                        Text(text = "\n".repeat(4) + "\t".repeat(14) +  "$item . ${strings[item]}", textAlign = TextAlign.Center, fontSize = 15.sp)
                     }
                 }
 
             }
-        }, verticalArrangement = Arrangement.spacedBy(3.dp), horizontalArrangement = Arrangement.spacedBy(3.dp))
+        }, verticalArrangement = Arrangement.spacedBy(3.dp), horizontalArrangement = Arrangement.Center)
+    }
+    if (showPro){
+
+        @Composable
+        fun showProgress(navController: NavHostController){
+            CircularProgressIndicator(2F,Modifier.width(2.dp), Blue, )
+        }
     }
 }

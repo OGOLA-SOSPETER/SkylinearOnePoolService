@@ -36,6 +36,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Blue
@@ -72,11 +73,10 @@ fun RegistrationScreen(navController:NavHostController) {
     val context = LocalContext.current
     val name = remember { mutableStateOf(TextFieldValue()) }
     val email = remember { mutableStateOf(TextFieldValue()) }
-    val countryCode = remember { mutableStateOf(TextFieldValue()) }
-    val mobileNo = remember { mutableStateOf(TextFieldValue()) }
+    val confirmationEmail = remember { mutableStateOf(TextFieldValue()) }
     val password = remember { mutableStateOf(TextFieldValue()) }
     val confirmPassword = remember { mutableStateOf(TextFieldValue()) }
-    var showDialog by remember{ mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
 
     val nameErrorState = remember { mutableStateOf(false) }
     val emailErrorState = remember { mutableStateOf(false) }
@@ -94,13 +94,22 @@ fun RegistrationScreen(navController:NavHostController) {
     Scaffold(
         modifier = Modifier,
         topBar = {
-            TopAppBar( title = { Text(text = "Registration") },
+            TopAppBar(
+                title = { Text(text = stringResource(R.string.registration)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate("mainPage") }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "back to home")
+                        Icon(
+                            Icons.Default.ArrowBack,
+                            contentDescription = stringResource(R.string.back_to_home)
+                        )
                     }
                 },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(Blue,Color.Green,Color.White,Color.White)
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    Blue,
+                    Color.Green,
+                    Color.White,
+                    Color.White
+                )
 
 
             )
@@ -137,7 +146,7 @@ fun RegistrationScreen(navController:NavHostController) {
                 modifier = Modifier.fillMaxWidth(),
                 isError = nameErrorState.value,
                 label = {
-                    Text(text = "Name*")
+                    Text(text = "Username")
                 },
             )
             if (nameErrorState.value) {
@@ -161,42 +170,11 @@ fun RegistrationScreen(navController:NavHostController) {
                 },
             )
             if (emailErrorState.value) {
-                Text(text = "Required", color = Color.Red)
+                Text(text = stringResource(R.string.required_error), color = Color.Red)
             }
+
             Spacer(modifier = Modifier.size(16.dp))
-            Row() {
-                OutlinedTextField(
-                    value = countryCode.value,
-                    onValueChange = {
 
-                        countryCode.value = it
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        autoCorrect = false
-
-                    ),
-                    modifier = Modifier.fillMaxWidth(0.4f),
-                    label = {
-                        Text(text = "Code")
-                    }, maxLines = 1
-                )
-                Spacer(modifier = Modifier.size(16.dp))
-                OutlinedTextField(
-                    value = mobileNo.value,
-                    onValueChange = {
-
-                        mobileNo.value = it
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone,
-                        autoCorrect = false
-                    ),
-                    label = {
-                        Text(text = "Mobile No")
-                    },
-                )
-            }
 
             Spacer(Modifier.size(16.dp))
             val passwordVisibility = remember { mutableStateOf(true) }
@@ -296,60 +274,69 @@ fun RegistrationScreen(navController:NavHostController) {
             }
             Spacer(Modifier.size(16.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            OutlinedButton(
-                onClick = {
-                    when {
-                        name.value.text.isEmpty() -> {
-                            nameErrorState.value = true
-                        }
+                OutlinedButton(
+                    onClick = {
+                        when {
+                            name.value.text.isEmpty() -> {
+                                nameErrorState.value = true
+                            }
 
-                        email.value.text.isEmpty() -> {
-                            emailErrorState.value = true
-                        }
+                            email.value.text.isEmpty() -> {
+                                emailErrorState.value = true
+                            }
 
-                        password.value.text.isEmpty() -> {
-                            passwordErrorState.value = true
-                        }
+                            password.value.text.isEmpty() -> {
+                                passwordErrorState.value = true
+                            }
 
-                        confirmPassword.value.text.isEmpty() -> {
-                            confirmPasswordErrorState.value = true
-                        }
+                            confirmPassword.value.text.isEmpty() -> {
+                                confirmPasswordErrorState.value = true
+                            }
 
-                        confirmPassword.value.text != password.value.text -> {
-                            confirmPasswordErrorState.value = true
-                        }
+                            confirmPassword.value.text != password.value.text -> {
+                                confirmPasswordErrorState.value = true
+                            }
 
-                        else -> {
+                            else -> {
 //                            authViewModel.register(username, user_password)
-                            showDialog = !showDialog
+                                showDialog = !showDialog
 
+                            }
                         }
-                    }
-                },
-                content = {
-                    Text(text = "Register", color = Blue)
-                },
-                modifier = Modifier.width(200.dp)
-            )
-        }
+                    },
+                    content = {
+                        Text(text = "Register", color = Blue)
+                    },
+                    modifier = Modifier.width(200.dp)
+                )
+            }
             Spacer(Modifier.size(16.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 OutlinedButton(onClick = {
-                    navController.navigate("loginPage") {
+                    navController.navigate(Screen.Login.route) {
                         popUpTo(navController.graph.startDestinationId)
                         launchSingleTop = true
                     }
-                },Modifier.width(200.dp)) {
+                }, Modifier.width(200.dp)) {
                     Text(text = "Login", color = Blue)
+                }
+
+                OutlinedButton(onClick = {
+                    navController.navigate(Screen.Reset.route) {
+                        popUpTo(navController.graph.startDestinationId)
+                        launchSingleTop = true
+                    }
+                }, Modifier.width(200.dp)) {
+                    Text(text = stringResource(R.string.login), color = Blue)
                 }
             }
         }
-        if (showDialog){
+        if (showDialog) {
             AlertDialog(
                 onDismissRequest = { showDialog = false },
                 confirmButton = {
                     OutlinedButton(onClick = {
-                    dataList.mutableLoginData[username] = user_password
+                        dataList.mutableLoginData[username] = user_password
                         showDialog = false
                         Toast.makeText(
                             context,
@@ -358,12 +345,14 @@ fun RegistrationScreen(navController:NavHostController) {
                         ).show()
                         dataList.mutableLoginData[username] = user_password
 //                        authViewModel.register(username, user_password)
-                        navController.navigate(Screen.Login.route)}) {
-                        Text(text = stringResource(R.string.ok))}
+                        navController.navigate(Screen.Login.route)
+                    }) {
+                        Text(text = stringResource(R.string.ok))
+                    }
                 },
-                icon = { Icons.Filled.Info},
-                title = { Text(text = "Registration Success.")},
-                text ={ Text(text = " ${name.value.text }  Registered successfully")}
+                icon = { Icons.Filled.Info },
+                title = { Text(text = "Registration Success.") },
+                text = { Text(text = " ${name.value.text}  Registered successfully") }
             )
         }
     }
@@ -376,25 +365,3 @@ fun RegistrationScreen(navController:NavHostController) {
 fun PreviewRegister() {
     RegistrationScreen(navController = rememberNavController())
 }
-//
-//data class User(val username: String, val password: String)
-//
-//fun saveUserDetails(user: User, context: Context) {
-//    val sharedPref = context.getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE) ?: return
-//    with(sharedPref.edit()) {
-//        putString("username", user.username)
-//        putString("password", user.password)
-//        apply()
-//    }
-//}
-//
-//fun getUserDetails(context: Context): User? {
-//    val sharedPref = context.getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE)
-//    val username = sharedPref.getString("username", null)
-//    val password = sharedPref.getString("password", null)
-//    return if (username != null && password != null) {
-//        User(username, password)
-//    } else {
-//        null
-//    }
-//}
