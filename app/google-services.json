@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "686215922359",
+    "project_id": "skylinearonepoolservice",
+    "storage_bucket": "skylinearonepoolservice.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686215922359:android:4bc649b370c2ec4b650332",
+        "android_client_info": {
+          "package_name": "seniordeveloper.peter.skylinearonepoolservice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "686215922359-ukktued9rkrf8kablrnsc88p6ecrs56p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBonIgi9U8JOGV7OAepCJ2cEGyHO31ktVQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "686215922359-ukktued9rkrf8kablrnsc88p6ecrs56p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
