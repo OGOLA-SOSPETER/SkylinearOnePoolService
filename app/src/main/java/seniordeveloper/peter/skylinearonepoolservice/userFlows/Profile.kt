@@ -27,7 +27,6 @@ import androidx.navigation.compose.rememberNavController
 import seniordeveloper.peter.skylinearonepoolservice.R
 import seniordeveloper.peter.skylinearonepoolservice.ui.theme.SkylinearOnePoolServiceTheme
 
-
 @Composable
 fun Profile(navController: NavHostController) {
     Column(

@@ -35,7 +35,7 @@ import seniordeveloper.peter.skylinearonepoolservice.models.Screen
 @Composable
 fun SettingsPage(navController: NavHostController) {
     val colors = Color(0xFF1976D2)
-    val cardModifier = Modifier
+    Modifier
         .fillMaxWidth()
         .height(80.dp)
         .padding(16.dp)

@@ -51,10 +51,19 @@ android {
 dependencies {
     implementation 'androidx.core:core-ktx:1.10.1'
 
+//    implementation 'com.google.firebase:firebase-auth-ktx:22.0.0'
+//
+//    //noinspection GradleDependency
+//    implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha03'
+
     //navigation
+    dependencies {
         def nav_version = "2.5.3"
         implementation("androidx.navigation:navigation-compose:$nav_version")
+    }
 
+
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.activity:activity-compose:1.7.1'
     implementation platform('androidx.compose:compose-bom:2022.10.00')
