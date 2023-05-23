@@ -69,10 +69,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import seniordeveloper.peter.skylinearonepoolservice.R
-import seniordeveloper.peter.skylinearonepoolservice.models.Screen
 import seniordeveloper.peter.skylinearonepoolservice.data_Sets.DataList
+import seniordeveloper.peter.skylinearonepoolservice.models.Screen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
