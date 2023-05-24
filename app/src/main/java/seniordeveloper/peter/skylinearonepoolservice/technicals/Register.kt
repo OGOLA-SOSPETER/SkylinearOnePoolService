@@ -44,6 +44,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -61,11 +62,10 @@ fun RegistrationScreen(navController:NavHostController) {
 
 
     val context = LocalContext.current
-    val name = remember { mutableStateOf(TextFieldValue()) }
-    val email = remember { mutableStateOf(TextFieldValue()) }
-//    val confirmationEmail = remember { mutableStateOf(TextFieldValue()) }
-    val password = remember { mutableStateOf(TextFieldValue()) }
-    val confirmPassword = remember { mutableStateOf(TextFieldValue()) }
+    val name = remember { mutableStateOf("") }
+    val email = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
+    val confirmPassword = remember { mutableStateOf("") }
     var showDialog by remember { mutableStateOf(false) }
 
     val nameErrorState = remember { mutableStateOf(false) }
@@ -75,7 +75,6 @@ fun RegistrationScreen(navController:NavHostController) {
     val scrollState = rememberScrollState()
 
 //    val authViewModel: AuthViewModel = viewModel()
-    val username by mutableStateOf("")
     var user_password by mutableStateOf("")
 
     val dataList = DataList()
@@ -122,26 +121,7 @@ fun RegistrationScreen(navController:NavHostController) {
                 withStyle(style = SpanStyle(color = Color.Black)) {
                     append("egistration")
                 }
-            }, fontSize = 30.sp)
-            Spacer(Modifier.size(16.dp))
-            OutlinedTextField(
-                value = name.value,
-                onValueChange = {
-                    if (nameErrorState.value) {
-                        nameErrorState.value = false
-                    }
-                    name.value = it
-                },
-
-                modifier = Modifier.fillMaxWidth(),
-                isError = nameErrorState.value,
-                label = {
-                    Text(text = "Username")
-                },
-            )
-            if (nameErrorState.value) {
-                Text(text = "Required", color = Color.Red)
-            }
+            }, fontSize = 30.sp, textAlign = TextAlign.Center)
             Spacer(Modifier.size(16.dp))
 
             OutlinedTextField(
@@ -253,9 +233,9 @@ fun RegistrationScreen(navController:NavHostController) {
                 visualTransformation = if (cPasswordVisibility.value) PasswordVisualTransformation() else VisualTransformation.None
             )
             if (confirmPasswordErrorState.value) {
-                val msg = if (confirmPassword.value.text.isEmpty()) {
+                val msg = if (confirmPassword.value.isEmpty()) {
                     "Required"
-                } else if (confirmPassword.value.text != password.value.text) {
+                } else if (confirmPassword.value != password.value) {
                     "Password not matching"
                 } else {
                     ""
@@ -267,28 +247,24 @@ fun RegistrationScreen(navController:NavHostController) {
                 OutlinedButton(
                     onClick = {
                         when {
-                            name.value.text.isEmpty() -> {
-                                nameErrorState.value = true
-                            }
 
-                            email.value.text.isEmpty() -> {
+                            email.value.isEmpty() -> {
                                 emailErrorState.value = true
                             }
 
-                            password.value.text.isEmpty() -> {
+                            password.value.isEmpty() -> {
                                 passwordErrorState.value = true
                             }
 
-                            confirmPassword.value.text.isEmpty() -> {
+                            confirmPassword.value.isEmpty() -> {
                                 confirmPasswordErrorState.value = true
                             }
 
-                            confirmPassword.value.text != password.value.text -> {
+                            confirmPassword.value != password.value -> {
                                 confirmPasswordErrorState.value = true
                             }
 
                             else -> {
-//                            authViewModel.register(username, user_password)
                                 showDialog = !showDialog
 
                             }
@@ -307,7 +283,7 @@ fun RegistrationScreen(navController:NavHostController) {
                         popUpTo(navController.graph.startDestinationId)
                         launchSingleTop = true
                     }
-                }, Modifier.width(200.dp)) {
+                }, Modifier.width(150.dp)) {
                     Text(text = "Login", color = Blue)
                 }
 
@@ -317,7 +293,7 @@ fun RegistrationScreen(navController:NavHostController) {
                         launchSingleTop = true
                     }
                 }, Modifier.width(200.dp)) {
-                    Text(text = stringResource(R.string.login), color = Blue)
+                    Text(text = stringResource(R.string.resetPassword), color = Blue)
                 }
             }
         }
@@ -326,14 +302,14 @@ fun RegistrationScreen(navController:NavHostController) {
                 onDismissRequest = { showDialog = false },
                 confirmButton = {
                     OutlinedButton(onClick = {
-                        dataList.mutableLoginData[username] = user_password
+                        dataList.mutableLoginData[email.value] = email.value
                         showDialog = false
                         Toast.makeText(
                             context,
                             "Registered successfully",
                             Toast.LENGTH_SHORT
                         ).show()
-                        dataList.mutableLoginData[username] = user_password
+                        dataList.mutableLoginData[user_password] = user_password
 //                        authViewModel.register(username, user_password)
                         navController.navigate(Screen.Login.route)
                     }) {
@@ -342,7 +318,7 @@ fun RegistrationScreen(navController:NavHostController) {
                 },
                 icon = { Icons.Filled.Info },
                 title = { Text(text = "Registration Success.") },
-                text = { Text(text = " ${name.value.text}  Registered successfully") }
+                text = { Text(text = " ${name.value}  Registered successfully") }
             )
         }
     }

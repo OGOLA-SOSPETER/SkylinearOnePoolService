@@ -1,25 +1,33 @@
 package seniordeveloper.peter.skylinearonepoolservice.userFlows
 
 import android.annotation.SuppressLint
-import android.widget.Toast
+import android.text.TextPaint
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.TextFieldColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
@@ -27,12 +35,12 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,7 +48,8 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -52,25 +61,34 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import seniordeveloper.peter.skylinearonepoolservice.R
-import seniordeveloper.peter.skylinearonepoolservice.data_Sets.DataList
+import seniordeveloper.peter.skylinearonepoolservice.data_Sets.UserDataInfo
+import seniordeveloper.peter.skylinearonepoolservice.data_Sets.overflowMenu
+import seniordeveloper.peter.skylinearonepoolservice.data_Sets.sampleData
+import seniordeveloper.peter.skylinearonepoolservice.data_Sets.useCase
 import seniordeveloper.peter.skylinearonepoolservice.models.Screen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -84,7 +102,7 @@ fun AppDashboard(navController:NavHostController) {
     ) {
         Scaffold(
             topBar = {
-                TopAppBar (
+                CenterAlignedTopAppBar (
                     title = {
                         Text(
                             text = stringResource(R.string.service_page),
@@ -112,6 +130,23 @@ fun AppDashboard(navController:NavHostController) {
                                     .size(50.dp)
                             )
                         }
+                        DropdownMenu(expanded = mainMenu,
+                            onDismissRequest = {!mainMenu }) {
+                            LazyColumn(content = {
+                                items(overflowMenu){ item->
+                                    DropdownMenuItem(onClick = { navController.navigate(Screen.Upnext.route) }) {
+                                        Text(
+                                            text = item.name,
+                                            textAlign = TextAlign.Center,
+                                            fontFamily = FontFamily.Monospace,
+                                            fontSize = 15.sp,
+                                            style = TextStyle.Default
+                                        )
+
+                                    }
+                                }
+                            })
+                        }
                     },
                     actions =
                     {
@@ -135,48 +170,38 @@ fun AppDashboard(navController:NavHostController) {
 
                     },
 
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(Gray),
+                    colors = TopAppBarDefaults.largeTopAppBarColors(),
 
                 )
             },
             bottomBar = {
                 BottomAppBar(
-                    modifier = Modifier.height(60.dp),
+                    modifier = Modifier.height(40.dp),
                     containerColor = Gray, contentColor = White,
                     tonalElevation = 3.dp
                 ) {
 
-                    Box {
-                        Column {
-                            IconButton(onClick = { navController.navigate(Screen.Profile.route) }) {
-                                Icon(Icons.Filled.Person, contentDescription = null)
-                            }
-                            Text(text = "People",modifier = Modifier.padding(top = 0.dp))
-                        }
-                    }
-                    Spacer(modifier = Modifier.width(90.dp))
-                    Box{
-                        Column{
-                            IconButton(onClick = {navController.navigate("loginPage")}) {
-                                Icon(Icons.Filled.Home, contentDescription = null)
-                            }
-                            Text(text = "Home",modifier = Modifier.padding(top = 0.dp))
-                        }
+                    IconButton(onClick = { navController.navigate(Screen.Profile.route) }) {
+                        Icon(Icons.Filled.Person, contentDescription = null)
                     }
 
                     Spacer(modifier = Modifier.width(90.dp))
-                    Box{
-                        Column {
-                            IconButton(onClick = { /*TODO*/ }) {
-                                BadgedBox(badge = { Text(text = "$num", color = White)}) {
-                                    Icon(Icons.Filled.AccountBox,contentDescription = null)
-                                }
-                            }
-                            Text(text = "Accounts",modifier = Modifier.padding(top = 0.dp))
-                        }
+
+
+                    IconButton(onClick = { navController.navigate(Screen.Login.route) }) {
+                        Icon(Icons.Filled.Home, contentDescription = null)
                     }
 
+                    Spacer(modifier = Modifier.width(90.dp))
+
+                    IconButton(onClick = { /*TODO*/ }) {
+                        BadgedBox(badge = { Text(text = "$num", color = White) }) {
+                            Icon(Icons.Filled.AccountBox, contentDescription = null)
+                        }
                     }
+                }
+
+
             },
             floatingActionButton = {
                 FloatingActionButton(onClick = {num++ }) {
@@ -199,70 +224,96 @@ fun PreviewDashboard(){
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private  fun Main(navController: NavHostController){
-    var txt by remember{mutableStateOf("")}
-    val context = LocalContext.current
-    var showPro by remember { mutableStateOf(false) }
 
     Column(verticalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.padding(top = 80.dp, start =  7.dp, end = 10.dp)) {
-
-
-        OutlinedTextField(
-            value = txt,
-            onValueChange = { txt = it },
-            modifier = Modifier
-                .height(50.dp)
-                .width(330.dp)
-                .offset(3.dp),
-            shape = RoundedCornerShape(18.dp),
-            keyboardOptions = KeyboardOptions(keyboardType =KeyboardType.Text,autoCorrect = true),
-            keyboardActions = KeyboardActions.Default,
-//            supportingText = { Text(text = stringResource(R.string.enter_id_to_search)) },
-//            label = { Text(text = stringResource(R.string.search_here)) },
-            placeholder = { Text(text = stringResource(R.string.enter_id_to_search), textAlign = TextAlign.Justify)},
-            trailingIcon = {
-                IconButton(onClick = {
-                    Toast.makeText(context,"Under Maintenance",Toast.LENGTH_SHORT).show()
-                }){
-                    Icon(
-                    Icons.Filled.Search,
-                    contentDescription = stringResource(R.string.search_icon),
-                    tint = Color.Blue,
-                    modifier = Modifier.size(28.dp)
-                    )
-
-            }
-            }
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-//
-        LazyVerticalGrid(columns = GridCells.Fixed(1), content = {
-            val dataList = DataList()
-            val strings = dataList.mutableStringList
-            items(strings.size){item ->
-                ElevatedCard(onClick = {
-                                       showPro = !showPro
-                }, modifier = Modifier
-                    .width(170.dp)
-                    .height(170.dp),
-                    colors = CardDefaults.cardColors(LightGray, White, Gray,Red)
-
+        LazyRow(content = {
+            items(useCase){use->
+                OutlinedButton(onClick = { Screen.Upnext.route },
+                    Modifier
+                        .width(100.dp)
+                        .height(35.dp),
+                    interactionSource = MutableInteractionSource(),
+                    contentPadding = PaddingValues(3.dp)
                 ) {
-                    Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally){
-                        Text(text = "\n".repeat(4) + "\t".repeat(14) +  "$item . ${strings[item]}", textAlign = TextAlign.Center, fontSize = 15.sp)
-                    }
+                    Text(text = use.name, fontFamily = FontFamily.Monospace, fontStyle = FontStyle.Normal, fontSize = 15.sp)
                 }
-
             }
-        }, verticalArrangement = Arrangement.spacedBy(3.dp), horizontalArrangement = Arrangement.Center)
-    }
-    if (showPro){
 
-        @Composable
-        fun showProgress(navController: NavHostController){
-            CircularProgressIndicator(2F,Modifier.width(2.dp), Blue, )
+        })
+       UserInfo()
+        Spacer(modifier = Modifier.height(5.dp))
+    }
+
+}
+
+@Composable
+private  fun UserInfo(){
+    LazyColumn(modifier = Modifier.padding(2.dp), content = {
+        items(sampleData) { user->
+            if (user == sampleData.last()){
+                ItemCard(user)
+                Spacer(modifier = Modifier.padding(bottom = 20.dp))
+            }
+            else
+            {
+                ItemCard(user)
+            }
         }
     }
+    )}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ItemCard(user:UserDataInfo){
+    var showPro by remember { mutableStateOf(false) }
+
+            ElevatedCard(onClick = {
+                showPro = !showPro
+            }, modifier = Modifier
+                .fillMaxWidth()
+                .height(intrinsicSize = IntrinsicSize.Max)
+                .padding(start = 20.dp, end = 20.dp)
+                ,
+                colors = CardDefaults.cardColors( White, Gray,Red),
+                content = {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .padding(top = 18.dp, bottom = 12.dp)
+                            .fillMaxWidth()
+                    ) {
+                        Image(
+                            painterResource(id = user.image),
+                            contentDescription = null,
+                            Modifier
+                                .size(100.dp)
+                                .clip(CircleShape)
+                                .border(border = BorderStroke(2.dp, White), shape = CircleShape)
+                        )
+                        Text(text = user.name, textAlign = TextAlign.Center,
+                            fontSize = 15.sp, fontWeight = FontWeight.Bold,
+                            textDecoration = TextDecoration.combine(
+                                listOf(TextDecoration.Underline)
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(text = stringResource(user.description), textAlign = TextAlign.Center, fontSize = 15.sp)
+
+                    }
+                        if (showPro) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.width(60.dp),
+                                color = Gray,
+                                strokeWidth = 5.dp
+                            )
+                        }
+                }
+                }
+            )
+    Spacer(modifier = Modifier.height(3.dp))
+
 }

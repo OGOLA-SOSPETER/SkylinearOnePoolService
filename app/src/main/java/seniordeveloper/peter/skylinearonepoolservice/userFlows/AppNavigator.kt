@@ -9,6 +9,7 @@ import seniordeveloper.peter.skylinearonepoolservice.technicals.AboutApp
 import seniordeveloper.peter.skylinearonepoolservice.technicals.PasswordReset
 import seniordeveloper.peter.skylinearonepoolservice.technicals.RegistrationScreen
 import seniordeveloper.peter.skylinearonepoolservice.technicals.SettingsPage
+import seniordeveloper.peter.skylinearonepoolservice.technicals.UpNext
 
 
 @Composable
@@ -25,6 +26,8 @@ fun AppNavigation(
         composable(Screen.Registration.route){ RegistrationScreen(navController) }
         composable(Screen.About.route){ AboutApp(navController) }
         composable(Screen.Reset.route){ PasswordReset(navController) }
+        composable(Screen.Upnext.route){ UpNext(navController) }
+
 
     }
 

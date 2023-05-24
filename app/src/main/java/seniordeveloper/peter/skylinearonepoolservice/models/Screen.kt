@@ -9,6 +9,8 @@ sealed class Screen(val route: String){
     object SignUp:Screen(route = "signup")
     object About:Screen(route = "about_dev")
     object Reset:Screen(route = "reset_pass")
+    object Upnext:Screen(route = "next")
+
 
 
 }

@@ -1,4 +1,5 @@
-package seniordeveloper.peter.skylinearonepoolservice.userFlows
+package seniordeveloper.peter.skylinearonepoolservice.technicals
+
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
@@ -29,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Cyan
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -43,7 +45,7 @@ import seniordeveloper.peter.skylinearonepoolservice.ui.theme.SkylinearOnePoolSe
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Profile(navController: NavHostController) {
+fun UpNext(navController: NavHostController) {
     Column {
         Scaffold(topBar = {
             TopAppBar(
@@ -58,12 +60,12 @@ fun Profile(navController: NavHostController) {
                     }
                 },
 
-            )
+                )
         },
             content = {
                 Box (Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-                Body()
-            }
+                    UpNextBody()
+                }
             })
 
 
@@ -71,14 +73,22 @@ fun Profile(navController: NavHostController) {
     }
 }
 @Composable
-fun Body(){
+fun UpNextBody(){
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painterResource(R.drawable.favorite),
             contentDescription = null,
-            colorFilter = ColorFilter.tint(Red),
-
+            colorFilter = ColorFilter.colorMatrix(
+               ColorMatrix(
+                    floatArrayOf(
+                         0f, 0f, 0f, 0f,
+                        0f,  0f, 0f, 0f,
+                        0f, 0f, 0f, 0f,
+                        0f, 0f, 0f, 1f, 0f
+                    )
+                )
+            )
             )
 
         Spacer(Modifier.height(24.dp))
@@ -90,7 +100,7 @@ fun Body(){
         )
         Spacer(Modifier.height(16.dp))
         Text(
-            text = stringResource(R.string.grab_beverage),
+            text = stringResource(R.string.check_later),
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
@@ -102,8 +112,8 @@ fun Body(){
 @Preview("large font", fontScale = 2f)
 @Preview(showBackground = true)
 @Composable
-fun ProfilePreview() {
+fun UpNextPreview() {
     SkylinearOnePoolServiceTheme() {
-        Profile(navController = rememberNavController() )
+        UpNext(navController = rememberNavController() )
     }
 }

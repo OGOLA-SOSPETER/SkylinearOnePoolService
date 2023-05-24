@@ -32,7 +32,7 @@
     <string name="professional_services">Professional Services</string>
     <string name="ok">OK</string>
     <string name="work_in_progress">Work In Progress</string>
-    <string name="grab_beverage">Grab A Beverage</string>
+    <string name="grab_beverage">Page Under Maintenance. Coming Up Soon.</string>
     <string name="register">Register</string>
     <string name="profile_pic">profile pic</string>
     <string name="service_page">Service Page</string>
@@ -51,4 +51,15 @@
     <string name="follow_us_on_instagram">Follow us on Instagram</string>
     <string name="whatsapp">WhatsApp</string>
     <string name="whatsapp_connect">Let\'s Chat on WhatsApp</string>
+    <string name="confirm_the_new_password">Confirm  the New password</string>
+    <string name="enter_the_new_password">Enter the New password</string>
+    <string name="enter_the_old_password">Enter the Old password</string>
+    <string name="resetPassword">Reset Password</string>
+    <string name="doctor_description">Health Officers that include: Opticians, Dentists, Psychiatrists, Optometrist, Paediatricians.</string>
+    <string name="delivery_description">Get your message delivered at your convenience at absolutely cheap prices.</string>
+    <string name="teacher_description">Have Your tutor at your Doorstep.\nGet the Primary, Secondary, Tertiary Tutors with Us.\n All are Government certified.</string>
+    <string name="chef_description">Have your meals sorted in seconds with the highly rated and qualified chefs with us.\nHolla Us.</string>
+    <string name="check_later">Kindly Check Back Later</string>
+
+
 </resources>

@@ -45,7 +45,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import seniordeveloper.peter.skylinearonepoolservice.R
-import seniordeveloper.peter.skylinearonepoolservice.data_Sets.DataList
 import seniordeveloper.peter.skylinearonepoolservice.models.Screen
 
 
@@ -60,12 +59,9 @@ fun UserLoginPage(navController:NavHostController) {
     var showDialog by remember{mutableStateOf(false)}
     var logErrorDialog by remember{mutableStateOf(false)}
     var passLog by remember{mutableStateOf(false)}
-    val dataList = DataList()
 
 
-//    val authViewModel: AuthViewModel = viewModel()
-    val username by mutableStateOf("")
-    val userPassword by mutableStateOf("")
+
 
     Column(modifier = Modifier.padding(top = 30.dp, start = 30.dp, end = 30.dp),
     verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally) {
@@ -141,10 +137,9 @@ Spacer(modifier = Modifier.height(15.dp))
 
             if (userName != "" &&  password.length <=8)
             {
-                val enteredUsername = userName
                 val enteredPassword = password
 
-                val passwordFromData = dataList.mutableLoginData[enteredUsername]
+                val passwordFromData = "1234"
 
                 if (passwordFromData == enteredPassword) {
                     passLog = !passLog
