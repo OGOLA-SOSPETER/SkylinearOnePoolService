@@ -24,6 +24,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.OutlinedButton
@@ -131,12 +132,10 @@ fun AppDashboard(navController:NavHostController) {
                             )
                         }
                         DropdownMenu(expanded = mainMenu,
-                            onDismissRequest = {!mainMenu }) {
-                            LazyColumn(content = {
-                                items(overflowMenu){ item->
+                            onDismissRequest = {mainMenu = !mainMenu }) {
                                     DropdownMenuItem(onClick = { navController.navigate(Screen.Upnext.route) }) {
                                         Text(
-                                            text = item.name,
+                                            text = overflowMenu[0].name,
                                             textAlign = TextAlign.Center,
                                             fontFamily = FontFamily.Monospace,
                                             fontSize = 15.sp,
@@ -144,8 +143,45 @@ fun AppDashboard(navController:NavHostController) {
                                         )
 
                                     }
-                                }
-                            })
+                            DropdownMenuItem(onClick = { navController.navigate(Screen.Upnext.route) }) {
+                                Text(
+                                    text = overflowMenu[2].name,
+                                    textAlign = TextAlign.Center,
+                                    fontFamily = FontFamily.Monospace,
+                                    fontSize = 15.sp,
+                                    style = TextStyle.Default
+                                )
+
+                            }
+                            DropdownMenuItem(onClick = { navController.navigate(overflowMenu[3].route) }) {
+                                Text(
+                                    text = overflowMenu[3].name,
+                                    textAlign = TextAlign.Center,
+                                    fontFamily = FontFamily.Monospace,
+                                    fontSize = 15.sp,
+                                    style = TextStyle.Default
+                                )
+
+                            }
+                            DropdownMenuItem(onClick = { navController.navigate(overflowMenu[4].route) }) {
+                                Text(
+                                    text = overflowMenu[4].name,
+                                    textAlign = TextAlign.Center,
+                                    fontFamily = FontFamily.Monospace,
+                                    fontSize = 15.sp,
+                                    style = TextStyle.Default
+                                )
+                            }
+                            DropdownMenuItem(onClick = { navController.navigate(overflowMenu[5].route) }) {
+                                Text(
+                                    text = overflowMenu[5].name,
+                                    textAlign = TextAlign.Center,
+                                    fontFamily = FontFamily.Monospace,
+                                    fontSize = 15.sp,
+                                    style = TextStyle.Default
+                                )
+
+                            }
                         }
                     },
                     actions =
@@ -278,7 +314,7 @@ fun ItemCard(user:UserDataInfo){
                 ,
                 colors = CardDefaults.cardColors( White, Gray,Red),
                 content = {
-                    Box(modifier = Modifier.fillMaxSize()) {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Column(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -291,7 +327,7 @@ fun ItemCard(user:UserDataInfo){
                             contentDescription = null,
                             Modifier
                                 .size(100.dp)
-                                .clip(CircleShape)
+                                .clip(RoundedCornerShape(7.dp))
                                 .border(border = BorderStroke(2.dp, White), shape = CircleShape)
                         )
                         Text(text = user.name, textAlign = TextAlign.Center,

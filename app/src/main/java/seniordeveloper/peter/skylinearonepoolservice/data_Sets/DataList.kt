@@ -27,8 +27,11 @@ data class UserDataInfo(val name:String, val image:Int, @StringRes val descripti
 val sampleData = listOf(
     UserDataInfo("Doctors", R.drawable.doctor, R.string.doctor_description),
     UserDataInfo("Message Delivery Agents",R.drawable.delivery,R.string.delivery_description),
-    UserDataInfo("Teachers", R.drawable.doctor, R.string.teacher_description),
-    UserDataInfo("Chefs", R.drawable.doctor, R.string.chef_description),
+    UserDataInfo("Teachers", R.drawable.teacher, R.string.teacher_description),
+    UserDataInfo("Chefs", R.drawable.chef, R.string.chef_description),
+    UserDataInfo("Drivers",R.drawable.driver,R.string.drivers),
+    UserDataInfo("Pilots",R.drawable.pilot,R.string.pilot),
+    UserDataInfo("Engineers",R.drawable.engineer,R.string.engineer)
 
 )
 

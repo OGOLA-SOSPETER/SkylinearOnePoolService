@@ -251,7 +251,7 @@ Spacer(modifier = Modifier.height(15.dp))
             }
         }
 
-        OutlinedButton(modifier = Modifier.width(250.dp), onClick = { navController.navigate(Screen.SignUp.route)}) {
+        OutlinedButton(modifier = Modifier.width(250.dp), onClick = { navController.navigate(Screen.Reset.route)}) {
             Row {
                 Image(
                     painter = painterResource(id = R.drawable.email),

@@ -52,6 +52,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.compose.material:material:1.4.3'
 
+
 //    implementation 'com.google.firebase:firebase-auth-ktx:22.0.0'
 //
 //    //noinspection GradleDependency
@@ -62,8 +63,6 @@ dependencies {
         def nav_version = "2.5.3"
         implementation("androidx.navigation:navigation-compose:$nav_version")
     }
-
-
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.activity:activity-compose:1.7.1'
@@ -99,8 +98,8 @@ dependencies {
     implementation("com.firebaseui:firebase-ui-auth:8.0.2")
     implementation("com.firebaseui:firebase-ui-database:8.0.2")
 
-
 }
+
 configurations.implementation {
     exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
 }
