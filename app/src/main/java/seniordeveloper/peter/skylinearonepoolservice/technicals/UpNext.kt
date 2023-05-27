@@ -28,7 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Cyan
+import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.res.painterResource
@@ -40,6 +42,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import seniordeveloper.peter.skylinearonepoolservice.R
 import seniordeveloper.peter.skylinearonepoolservice.models.Screen
+import seniordeveloper.peter.skylinearonepoolservice.ui.theme.Blue
 import seniordeveloper.peter.skylinearonepoolservice.ui.theme.SkylinearOnePoolServiceTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -77,19 +80,9 @@ fun UpNextBody(){
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
-            painterResource(R.drawable.favorite),
+            painterResource(R.drawable.star),
             contentDescription = null,
-            colorFilter = ColorFilter.colorMatrix(
-               ColorMatrix(
-                    floatArrayOf(
-                         0f, 0f, 0f, 0f,
-                        0f,  0f, 0f, 0f,
-                        0f, 0f, 0f, 0f,
-                        0f, 0f, 0f, 1f, 0f
-                    )
-                )
-            )
-            )
+            colorFilter = ColorFilter.lighting(Green,Red))
 
         Spacer(Modifier.height(24.dp))
         Text(

@@ -9,6 +9,9 @@ sealed class Screen(val route: String){
     object About:Screen(route = "about_dev")
     object Reset:Screen(route = "reset_pass")
     object Upnext:Screen(route = "next")
+    object User:Screen(route =  "userData")
+    object Bottomsheet:Screen(route = "mySheet")
+    object Fire:Screen(route = "firebasedata")
 
 
 
